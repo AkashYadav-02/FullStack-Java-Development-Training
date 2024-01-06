@@ -1,0 +1,217 @@
+package com.aurionpro.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
+import com.aurionpro.model.Account;
+import com.aurionpro.model.BankDbUtil;
+import com.aurionpro.model.Transaction;
+import com.aurionpro.model.User;
+
+
+@WebServlet("/userController")
+public class userController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	@Resource(name = "jdbc/bank-source")
+	private DataSource dataSource;
+	private BankDbUtil dbUtil;
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
+		dbUtil = new BankDbUtil(dataSource);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String actionType = request.getParameter("action");
+		System.out.println(actionType);
+		if (actionType == null) {
+			actionType = "user";
+		}
+		try {
+			switch (actionType) {
+			case "user":
+				loadData(request, response);
+				break;
+			case "passbook":
+				loadPassbook(request, response);
+				break;
+ 	      case "transaction":
+			loadTransaction(request, response);
+ 			break;
+			case "edit":
+				updateuser(request, response);
+				break;
+			case "save":
+				saveUser(request,response);
+				break;
+		case "back":
+			loadData(request, response);
+			break;
+		 case "makeTransaction":
+				makeTransaction(request, response);
+	 			break;
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void makeTransaction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Make Transaction");
+		int userId = Integer.parseInt(request.getParameter("userid"));
+		
+		int userAccount = Integer.parseInt(request.getParameter("useraccount"));
+		String userAccountType=request.getParameter("userAccountType");
+		int userBalance= Integer.parseInt(request.getParameter("userAccountBaalance"));
+		String transactionType=request.getParameter("transactionType");
+		int BAccount=Integer.parseInt(request.getParameter("bAccount"));
+		int bamount = Integer.parseInt(request.getParameter("bamount"));
+		String bname=request.getParameter("bname");
+		Transaction ts=new Transaction( userId,  userAccount, 
+				  userAccountType,  userBalance,  transactionType,
+					 BAccount,  bamount,  bname);
+		  System.out.println( " from make payments "+ " userid:"+userId   +" user account:"+userAccount   +" user account type:"+userAccountType   +
+				  " userbalance :"+userBalance   + " usertransacrion tupe:"+transactionType   +" Bacccount:"+BAccount  +"tamount"+bamount + " Bname:"+  bname);
+		  HttpSession session = request.getSession();
+		       session.setAttribute("transaction", ts);
+		   if( ts.getTransactionType()=="deposite") {
+			      
+			   makeDeposite(request,response);
+			   
+		   }
+		   else  {
+			   makeWithdraw(request,response);
+			   
+			   
+			   loadPassbook(request,response);
+		   }
+//		   makeWithdraw(request, response);
+		
+	}
+
+	
+	
+
+	private void makeWithdraw(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+		HttpSession session = request.getSession();
+		  Transaction ts = (Transaction) session.getAttribute("transaction");
+		    
+		  
+
+		  System.out.println(" from inside make withdraw"+ts);
+		  
+		 dbUtil.makeWithdraw(ts);
+		 
+		  
+		
+		
+		
+	}
+
+	private void makeDeposite(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		  Transaction ts = (Transaction) session.getAttribute("transaction");
+	  
+		  System.out.println(" from inside make withdraw"+ts);
+		  
+		 dbUtil.makeDeposite(ts);
+	}
+
+	private void loadTransaction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		  User user1 = (User) session.getAttribute("userData");
+		Account userAccount=	dbUtil.findAccount(user1.getId());
+		request.setAttribute("userAccount", userAccount);
+		System.out.println(userAccount);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/usertransaction.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+
+	private void saveUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	
+		int userid = Integer.parseInt(request.getParameter("id"));
+		String fname=request.getParameter("firstname");
+		String lname=request.getParameter("lastname");
+		String userName=request.getParameter("username");
+//		int status= Integer.parseInt(request.getParameter("command"));
+		String password=request.getParameter("password");
+		User user=new User(userid,fname,lname,userName,password);
+		
+		System.out.println("Updated data :"+user);
+		this.dbUtil.updateUser(user,userid);
+		loadData(request, response);
+		
+	}
+
+	private void updateuser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		 System.out.println("Call Update");
+		
+//	
+		HttpSession session = request.getSession();
+		  User user1 = (User) session.getAttribute("userData");
+		User user=	dbUtil.findUserByid(user1.getId());
+		request.setAttribute("user", user);
+		System.out.println(user);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/updateuser.jsp");
+		dispatcher.forward(request, response);
+
+
+		
+	}
+
+	private void loadPassbook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    HttpSession session = request.getSession(); // Get the session from the request
+	    User user = (User) session.getAttribute("userData");
+
+	    if (user != null) {
+	        System.out.println(user);
+	        List<Transaction>trsaction=dbUtil.getUserTransaction(user.getId());
+	        request.setAttribute("t_list", trsaction);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/transactionList.jsp");
+			dispatcher.forward(request, response);
+	       
+	    } else {
+	       
+	    }
+	}
+
+
+	private void loadData(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/user.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

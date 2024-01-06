@@ -1,0 +1,97 @@
+package com.aurionpro.controller;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import com.aurionpro.model.BankDbUtil;
+import com.aurionpro.model.Transaction;
+
+/**
+ * Servlet implementation class adminController
+ */
+@WebServlet("/adminController")
+public class adminController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	@Resource(name="jdbc/bank-source")
+	private DataSource dataSource;
+	
+	private  BankDbUtil dbUtil;
+    
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
+		 dbUtil=new BankDbUtil(dataSource);
+	}
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		String actionType = request.getParameter("action");
+		 
+		System.out.println("actiontype on "+ actionType	);
+		if (actionType == null) {
+			actionType = "admin";
+		}
+		try {
+			switch (actionType) {
+			case "admin": loadData(request,response);
+				response.sendRedirect(request.getContextPath() + "/admin.jsp");
+			break;
+			case "userList":loadUserList(request,response);
+				response.sendRedirect(request.getContextPath() + "/userList.jsp");
+				
+				break;
+			case "transaction": 
+				loadTransaction(request,response);
+				response.sendRedirect(request.getContextPath() + "/transactionList.jsp");
+				break;
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	
+	private void loadTransaction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Transaction> transactionList = dbUtil.loadAllTransaction();
+		request.setAttribute("tr_list", transactionList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/transactionList.jsp");
+		dispatcher.forward(request, response);
+	}
+
+
+	private void loadUserList(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void loadData(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

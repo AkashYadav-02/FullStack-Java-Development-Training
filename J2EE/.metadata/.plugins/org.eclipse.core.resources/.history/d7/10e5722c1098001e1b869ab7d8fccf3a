@@ -1,0 +1,537 @@
+package com.aurionpro.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+public class BankDbUtil {
+
+	private DataSource dataSource;
+
+	public BankDbUtil(DataSource dataSource) {
+		super();
+		this.dataSource = dataSource;
+	}
+
+	public List<Admin> adminList() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+
+		List<Admin> adminList = new ArrayList<Admin>();
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "select * from admin";
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String userName = resultSet.getString("user_name");
+
+				String password = resultSet.getString("password");
+
+				Admin tempaAdmin = new Admin(id, userName, password);
+				adminList.add(tempaAdmin);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return adminList;
+	}
+
+	public List<User> userList() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+
+		List<User> userList = new ArrayList<User>();
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "select * from user";
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("user_id");
+				String firstName = resultSet.getString("first_name");
+				String lastName = resultSet.getString("last_name");
+				int active = resultSet.getInt("status");
+				String userName = resultSet.getString("user_name");
+				String password = resultSet.getString("password");
+
+				User tempaAdmin = new User(id, firstName, lastName, active, userName, password);
+				userList.add(tempaAdmin);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return userList;
+	}
+
+	public Admin findAdminById(String email, String password) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT * FROM admin WHERE admin_name = ? AND password = ?";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+
+			resultSet = stmt.executeQuery(); // Execute the prepared statement without passing the SQL string
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String userName = resultSet.getString("admin_name");
+				String pass = resultSet.getString("password");
+
+				Admin tempAdmin = new Admin(id, userName, pass);
+				return tempAdmin;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return null;
+
+	}
+
+	public List<Transaction> loadAllTransaction() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+
+		List<Transaction> transactionList = new ArrayList<Transaction>();
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "select * from transaction";
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
+
+			while (resultSet.next()) {
+
+				int tid = resultSet.getInt("tr_id");
+				int userAccount = resultSet.getInt("user_acc");
+				String userAccountType = resultSet.getString("user_acc_type");
+				int userBalance = resultSet.getInt("user_ac_bal");
+//				String transactionType=resultSet.getString("user_acc_type");
+				int baccount = resultSet.getInt("bene_acc");
+				int bamount = resultSet.getInt("amount");
+				String bname = resultSet.getString("babe_name");
+				String trans_type = resultSet.getString("tr_type");
+
+				Transaction transaction = new Transaction(tid, userAccount, userAccountType, userBalance, bname,
+						bamount, baccount, trans_type);
+				transactionList.add(transaction);
+				System.out.println(transactionList);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		System.out.println(transactionList);
+		return transactionList;
+	}
+
+	public List<User> loadAllUser() {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+
+		List<User> useList = new ArrayList<User>();
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "select * from user ";
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
+
+			while (resultSet.next()) {
+				int userId = resultSet.getInt("user_id");
+				String firstName = resultSet.getString("first_name");
+				String lastName = resultSet.getString("last_name");
+				int active = resultSet.getInt("status");
+
+				String email = resultSet.getString("user_name");
+				String password = resultSet.getString("password");
+
+				User user = new User(userId, firstName, lastName, active, email, password);
+				useList.add(user);
+				System.out.println(user);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+//		System.out.println(useList);
+		return useList;
+	}
+
+	public User findUserByid(int id) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+
+//		User useList;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "select * from user where user_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				int userId = resultSet.getInt("user_id");
+				String firstName = resultSet.getString("first_name");
+				String lastName = resultSet.getString("last_name");
+				int status = resultSet.getInt("status");
+				String userName = resultSet.getString("user_name");
+				String password = resultSet.getString("password");
+
+				User user = new User(userId, firstName, lastName, status, userName, password);
+//				useList.add(user);
+				System.out.println(user);
+				return user;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+//		System.out.println(useList);
+		return null;
+	}
+
+	public void deleteUser(int userid) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			String deleteUserQuery = "update    user  set status = 0 where user_id=?";
+			stmt = conn.prepareStatement(deleteUserQuery);
+			stmt.setInt(1, userid);
+			stmt.executeUpdate();
+			conn.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		System.out.println(userid + " deleted ");
+
+	}
+
+	public void updateUser(User user, int userid) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE user SET first_name=?, last_name=?, user_name=?, password=?, status=? WHERE user_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user.getFirstName());
+			stmt.setString(2, user.getLastName());
+			stmt.setString(3, user.getUserName());
+			stmt.setString(4, user.getPassWord());
+			stmt.setInt(5, user.getActive()); // Assuming 'active' is a boolean field
+			stmt.setInt(6, user.getId()); // Set the user ID for the WHERE clause
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("User updated successfully!");
+			} else {
+				System.out.println("User update failed!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// Handle exceptions as needed
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				// Handle exceptions when closing connections
+			}
+		}
+	}
+
+	public void updateByUser(User user, int userid) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE user SET first_name=?, last_name=?, user_name=?, password=? WHERE user_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user.getFirstName());
+			stmt.setString(2, user.getLastName());
+			stmt.setString(3, user.getUserName());
+			stmt.setString(4, user.getPassWord());
+
+			stmt.setInt(5, user.getId()); // Set the user ID for the WHERE clause
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("User updated successfully!");
+			} else {
+				System.out.println("User update failed!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// Handle exceptions as needed
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				// Handle exceptions when closing connections
+			}
+		}
+	}
+
+	public User findUserById(String userName, String password) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT * FROM user WHERE user_name = ? AND password = ? and status=1";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userName);
+			stmt.setString(2, password);
+
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				int id = resultSet.getInt("user_id");
+				String fname = resultSet.getString("last_name");
+				String lname = resultSet.getString("first_name");
+				int active = resultSet.getInt("status");
+				String user = resultSet.getString("user_name");
+				String pass = resultSet.getString("password");
+
+				User temp = new User(id, fname, lname, active, user, pass);
+				return temp;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+
+	public List<Transaction> getUserTransaction(int id) {
+
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+
+		List<Transaction> tList = new ArrayList<Transaction>();
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT t.transaction_id, t.transaction_time, t.acc_num, t.transaction_type_id\r\n"
+					+ "FROM transaction t\r\n" + "INNER JOIN account ac ON ac.acc_num = t.acc_num\r\n"
+					+ "INNER JOIN user u ON u.user_id = ac.user_id;\r\n" + "";
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
+
+			while (resultSet.next()) {
+				int tid = resultSet.getInt("tr_id");
+				int userAccount = resultSet.getInt("user_acc");
+				String userAccountType = resultSet.getString("user_acc_type");
+				int userBalance = resultSet.getInt("user_ac_bal");
+//				String transactionType=resultSet.getString("user_acc_type");
+				int baccount = resultSet.getInt("bene_acc");
+				int bamount = resultSet.getInt("amount");
+				String bname = resultSet.getString("babe_name");
+				String trans_type = resultSet.getString("tr_type");
+
+				Transaction transaction = new Transaction(tid, userAccount, userAccountType, userBalance, bname,
+						bamount, baccount, trans_type);
+				System.out.println(tList);
+				tList.add(transaction);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+//		System.out.println(useList);
+		return null;
+	}
+
+	public Account findAccount(int id) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT ac.acc_num, ac.acc_type, ac.user_id, ac.balance " + "FROM account ac "
+					+ "INNER JOIN user u ON u.user_id=ac.user_id   " + "WHERE u.user_id = ?";
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, id);
+
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				int accountNumber = resultSet.getInt("acc_num");
+				int balance = resultSet.getInt("balance");
+				String accountType = resultSet.getString("acc_type");
+				int user_id = resultSet.getInt("user_id");
+
+				Account temp = new Account(accountNumber, accountType, balance, user_id);
+				return temp;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;javax.servlet.jsp.jstl-1.2.1.jar, javax.servlet.jsp.jstl-api-1.2.1.jar&apos; to &apos;lib&apos;" description="Move 2 resources to &apos;lib&apos;" destination="src/main/webapp/WEB-INF/lib" element1="/01-jsp-app/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar" element2="/01-jsp-app/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="2" stamp="1701065766299" updateReferences="true"/>
+</session>

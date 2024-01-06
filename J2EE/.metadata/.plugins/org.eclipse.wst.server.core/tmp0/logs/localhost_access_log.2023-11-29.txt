@@ -1,0 +1,17 @@
+127.0.0.1 - - [29/Nov/2023:09:15:13 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:09:15:18 +0530] "GET /student-mvc-crud/StudentController HTTP/1.1" 200 14773
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:09:15:20 +0530] "GET /favicon.ico HTTP/1.1" 404 762
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:09:16:35 +0530] "GET /student-mvc-crud/StudentController?searchBy=id&value=20&action=search HTTP/1.1" 200 1995
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:12:24 +0530] "GET /student-mvc-crud/StudentController?searchBy=last_name&value=Yadav&action=search HTTP/1.1" 200 6915
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:12:31 +0530] "GET /student-mvc-crud/StudentController?action=delete&id=26 HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:12:31 +0530] "GET /student-mvc-crud/StudentController HTTP/1.1" 200 11701
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:12:37 +0530] "GET /student-mvc-crud/StudentController?action=delete&id=37 HTTP/1.1" 302 -
+127.0.0.1 - - [29/Nov/2023:10:21:54 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:21:55 +0530] "GET /student-mvc-crud/StudentController HTTP/1.1" 200 11374
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:22:01 +0530] "GET /student-mvc-crud/StudentController?searchBy=id&value=20&action=search HTTP/1.1" 200 1995
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:26:51 +0530] "GET /student-mvc-crud/StudentController?searchBy=id&value=&action=search HTTP/1.1" 500 1649
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:27:18 +0530] "GET /student-mvc-crud/StudentController?searchBy=id&value=20&action=search HTTP/1.1" 500 1995
+127.0.0.1 - - [29/Nov/2023:10:29:56 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:29:57 +0530] "GET /student-mvc-crud/StudentController HTTP/1.1" 200 11374
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:30:07 +0530] "GET /student-mvc-crud/StudentController?searchBy=id&value=21&action=search HTTP/1.1" 500 1996
+0:0:0:0:0:0:0:1 - - [29/Nov/2023:10:30:16 +0530] "GET /student-mvc-crud/StudentController?searchBy=first_name&value=Akash&action=search HTTP/1.1" 500 6893

@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>recipi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">recipi</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card *ngFor="let item of recipi">
+    <p>{{item.id}}</p>
+    <p>{{item.title}}</p>
+    <img src={{item.imgUrl}}>
+    <p > {{item.ingredient}}</p>
+
+   
+  </ion-card>
+</ion-content>

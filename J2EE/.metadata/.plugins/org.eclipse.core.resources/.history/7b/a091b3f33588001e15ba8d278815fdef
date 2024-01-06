@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous">
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+  <h2>User Information Form</h2>
+  
+  <div class=container mt-5 >
+  <form  action="student-response.jsp" method ="get">
+  <div class ="form-group">
+  
+  <label> Name :</label>
+   <input  type="text"  name ="name" required  >  
+    </div>
+      <div class ="form-group">
+  
+  <label> Email :</label>
+   <input  type="email"  name ="email" required  >  
+    </div>
+    
+    
+      <div class ="form-group">
+  
+  <label for="degree">Highest Degree: </label>
+  <select class ="form-control" id="degree" name ="degree">
+  <option Select>  choose</option>
+  
+  <option value="BE">  BE</option>
+  <option value="BSC-IT">  BSC-IT</option>
+  <option value="MBA">  MBA</option>
+  <option value="PHD">  PHD</option>
+  </select>
+   
+    </div>
+    
+  </form>
+ 
+  </div>
+    
+       
+      
+   
+
+</body>
+</html>

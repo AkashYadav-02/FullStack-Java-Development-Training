@@ -1,0 +1,12 @@
+<div class="row mb-3">
+    <div class="col">
+        <label for="enterAmount" class="form-label">Enter Amount</label>
+        <div class="input-group">
+            <input type="number" id="enterAmount" name="amount" class="form-control" placeholder="Enter Amount" required>
+            <button class="btn btn-primary ms-2" type="submit">Submit</button>
+            <button type="button" name="action" value="back" class="btn btn-dark ms-2">
+                <i class="fa-sharp fa-solid fa-arrow-left"></i> Back
+            </button>
+        </div>
+    </div>
+</div>

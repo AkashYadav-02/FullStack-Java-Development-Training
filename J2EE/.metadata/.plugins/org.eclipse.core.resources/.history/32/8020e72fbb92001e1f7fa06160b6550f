@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container mt-5 form-container">
+		<h1 class="text-center mb-4">Welcome To ABC Bank</h1>
+		<form action="adminController" method="get">
+		 <div class="mb-3 text-center">
+		<button type="submit" class="btn btn-primary  active "  name="action" value="transaction">Transaction</button>
+		<button type="submit" class="btn btn-success active " name="action" value="passbook">Passbook</button>
+		<button type="submit" class="btn btn-secondary active " name="action" value="edit">edit</button>
+			</div>
+			<button type="submit" class="btn btn-danger  active " name ="action" value=" logout">Logout</button>
+		</form>
+	</div>
+</body>
+</html>
