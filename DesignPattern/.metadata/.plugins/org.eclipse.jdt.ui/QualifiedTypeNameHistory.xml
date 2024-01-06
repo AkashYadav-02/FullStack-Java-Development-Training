@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.aurionpro.model.Singleton"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.CarFactory"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.CarType"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.ICars"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.ICarFactory"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.MarutiFactory"/>
+    <fullyQualifiedTypeName name="com.aurionpro.test.CarFactoryTest"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.CircleShapeFactory"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.Circle"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.Account"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.INotifier"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.EmailNotifier"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.SmsNotifier"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.WhatsappNotifier"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.ShoppingCart"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.Biscuit"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.SoftDrink"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.Hat"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.HatAdapter"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.HotelReception"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.CarInspection"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.WheelAlign"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.BreakCheck"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.OilChange"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.StandardHat"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.GoldenHat"/>
+    <fullyQualifiedTypeName name="com.aurionpro.model.RibonHat"/>
+</qualifiedTypeNameHistroy>

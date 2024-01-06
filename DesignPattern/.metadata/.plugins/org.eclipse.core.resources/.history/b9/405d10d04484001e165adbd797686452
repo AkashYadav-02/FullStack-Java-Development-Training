@@ -1,0 +1,48 @@
+package com.aurionpro.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProxyInternet  implements Internet{
+	
+	RealInternet internet;
+	List<String>bannedSite = new ArrayList<>();
+
+	
+
+	public ProxyInternet() {
+		
+		this.internet = new RealInternet();
+	    this.bannedSite.add("google.com");
+	    this.bannedSite.add("instagram.com");
+	    this.bannedSite.add("facebook.com");
+	}
+
+	@Override
+	public void connectTo(String siteName)  throws SiteAccessDeniedException{
+	 if(!bannedSite.contains(siteName)) {
+		 internet.connectTo(siteName);
+	 }else {
+		 throws new SiteAccessDeniedException(siteName+"Access is Denied ")
+	 }
+		
+	}
+
+	public RealInternet getInternet() {
+		return internet;
+	}
+
+	public void setInternet(RealInternet internet) {
+		this.internet = internet;
+	}
+
+	public List<String> getBannedSite() {
+		return bannedSite;
+	}
+
+	public void setBannedSite(List<String> bannedSite) {
+		this.bannedSite = bannedSite;
+	}
+	
+
+}

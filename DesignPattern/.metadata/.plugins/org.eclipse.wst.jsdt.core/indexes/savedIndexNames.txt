@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\akash.yadav\Desktop\Design Pattern\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1354591420.index
+3385658910.index
+551601629.index
+4042104214.index
+3989378827.index
+2665312357.index

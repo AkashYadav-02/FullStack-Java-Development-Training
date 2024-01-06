@@ -1,0 +1,8 @@
+package com.aurionpro.test;
+
+public class EmployeeTest {
+ public static void main(String[] args) {
+	
+	 IEmployee dev1= new Developer("Akash"," Principle Engineer");
+}
+}

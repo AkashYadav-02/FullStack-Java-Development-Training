@@ -1,0 +1,27 @@
+package com.aurionpro.model;
+
+public enum ServiceType {
+	
+	INSPECTION,WHEELALIGN,OILCHANGE,BEACKCHANGE;
+	 public String  getServiceType() {
+		  String serviceName=null;
+		  
+		 
+		 switch(this) {
+		 case  INSPECTION:  serviceName=" Car Inspection\n";
+		 break;
+		 case  WHEELALIGN:  serviceName=" Wheel Alignment\n";
+		 break;
+		 case  OILCHANGE:  serviceName=" Oil Change \n";
+		 break;
+		 case  BEACKCHANGE:  serviceName=" Break Change \n";
+		 break;
+		 
+		 
+		 }
+		 
+		 return serviceName;
+		 
+	 }
+
+}
